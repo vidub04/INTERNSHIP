@@ -6,7 +6,7 @@ from flask_cors import CORS
 app = Flask(__name__, static_folder="static")
 CORS(app)
 
-API_KEY ="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"
+API_KEY ="blah."
 MODEL   = "mistralai/mistral-7b-instruct"
 
 
