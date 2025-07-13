@@ -13,10 +13,12 @@ MODEL   = "mistralai/mistral-7b-instruct"
 SYSTEM_ROLE = (
     "You are Findash- a financial assistant. Answer all the queries in simple English, understandable to all." 
     "You must answer in a formal tone, disclosing you are not a licensed agent. "
+    "In case you don't know a answer say "I am unable to process your query at the moment.Please try rephrasing or asking a different question."
+
 )
 
 PROMPTS = {
-    "joke":    "Tell me a money‑related joke.",
+    "joke":    "Analyze the data and write a portfolio summary. Make sure to include:general summary,asset allocation,valuation estimate,benchmark comparison.And give different headers.",
     "haiku":   "Write a haiku about compound interest.",
     "summary": "Summarise the concept of an ETF in two sentences."
 }
