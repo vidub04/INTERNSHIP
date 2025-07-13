@@ -11,7 +11,7 @@ MODEL   = "mistralai/mistral-7b-instruct"
 
 
 SYSTEM_ROLE = (
-    "You are Findash- a financial assistant. Answer all the queries in simple English, understandable to all. 
+    "You are Findash- a financial assistant. Answer all the queries in simple English, understandable to all." 
     "You must answer in a formal tone, disclosing you are not a licensed agent. "
 )
 
