@@ -11,9 +11,6 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from dotenv import load_dotenv
 
-# ──────────────────────────────────────────────────────────────
-# 1.  Secrets & model config
-# ──────────────────────────────────────────────────────────────
 load_dotenv()                                      # pulls .env in dev
 
 API_KEY = os.getenv("OPENROUTER_API_KEY")
@@ -25,9 +22,6 @@ if not API_KEY:
 
 MODEL = "mistralai/mistral-7b-instruct"            # any OpenRouter model
 
-# ──────────────────────────────────────────────────────────────
-# 2.  Flask setup
-# ──────────────────────────────────────────────────────────────
 app = Flask(__name__, static_folder="static")
 CORS(app)                                          # very open – restrict in prod!
 
@@ -42,9 +36,6 @@ SYSTEM_ROLE = (
     "or asking a different question.\""
 )
 
-# ──────────────────────────────────────────────────────────────
-# 4.  Template prompts keyed by dropdown option
-# ──────────────────────────────────────────────────────────────
 PROMPTS = {
     "summary":
         "Provide a concise portfolio summary, including:\n"
@@ -78,20 +69,13 @@ PROMPTS = {
     "cashflow":
         "Perform a cash‑flow analysis highlighting inflows, outflows, and net "
         "position:\n{table}",
-    "fees":
-        "Identify all fees & expenses present in the following data and "
-        "discuss their impact:\n{table}",
-    "tax":
-        "Estimate the potential tax impact for this portfolio based on the "
-        "data:\n{table}",
+    
     "improvements":
         "Suggest actionable improvements or optimisations for the portfolio "
         "below:\n{table}",
 }
 
-# ──────────────────────────────────────────────────────────────
-# 5.  Helper: call OpenRouter
-# ──────────────────────────────────────────────────────────────
+
 def call_openrouter(prompt: str) -> str:
     headers = {
         "Authorization": f"Bearer {API_KEY}",
@@ -113,10 +97,7 @@ def call_openrouter(prompt: str) -> str:
     )
     r.raise_for_status()
     return r.json()["choices"][0]["message"]["content"].strip()
-
-# ──────────────────────────────────────────────────────────────
-# 6.  API endpoint hit by your JavaScript
-# ──────────────────────────────────────────────────────────────
+    
 @app.route("/chat", methods=["POST"])
 def chat():
     """
@@ -155,7 +136,6 @@ def static_files(path):
     return send_from_directory(app.static_folder, path)
 
 
-# ──────────────────────────────────────────────────────────────
 if __name__ == "__main__":
-    # set host="0.0.0.0" if you want LAN devices to reach it
+
     app.run(debug=True, port=5000)
